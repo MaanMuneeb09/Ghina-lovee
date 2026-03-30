@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Ghina ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #ff758c, #ff7eb3);
+    font-family: Arial;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+}
+
+h1 {
+    margin-top: 80px;
+    font-size: 3em;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px white; }
+    to { text-shadow: 0 0 25px #fff, 0 0 40px pink; }
+}
+
+p {
+    font-size: 1.5em;
+}
+
+button {
+    margin: 10px;
+    padding: 12px 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.yes { background: #fff; color: #ff4d6d; }
+.no { background: #ff4d6d; color: white; }
+
+.flower {
+    position: absolute;
+    font-size: 20px;
+    animation: fall 6s linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-10vh); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<h1>I love you, Ghina ❤️</h1>
+<p>You mean everything to me.</p>
+<p>I love you so much 💖</p>
+
+<div id="question">
+    <p>Do you love me back?</p>
+    <button class="yes" onclick="yes1()">A. Yes</button>
+    <button class="no" onclick="no1()">B. No</button>
+</div>
+
+<audio autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/14/audio_6b1e6f88d6.mp3?filename=arabic-romantic-141997.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function yes1() {
+    document.getElementById("question").innerHTML =
+    "<p>I knew it 😌❤️</p>";
+}
+
+function no1() {
+    document.getElementById("question").innerHTML =
+    "<p>Are you sure Ghina? 🥺</p>\
+    <button class='yes' onclick='yes2()'>Yes</button>\
+    <button class='no' onclick='no2()'>No</button>";
+}
+
+function yes2() {
+    document.getElementById("question").innerHTML =
+    "<p>Think again 😭❤️ Do you love me back?</p>\
+    <button class='yes' onclick='finalYes()'>A. Yes</button>\
+    <button class='yes' onclick='finalYes()'>B. Obviously</button>\
+    <button class='yes' onclick='finalYes()'>C. Option B 😏</button>";
+}
+
+function no2() {
+    document.getElementById("question").innerHTML =
+    "<p>I’ll take that as a yes 😌❤️</p>";
+}
+
+function finalYes() {
+    document.getElementById("question").innerHTML =
+    "<h2>❤️ I LOVE YOU SO MUCH GHINA ❤️</h2>";
+}
+
+function createFlower() {
+    const flower = document.createElement("div");
+    flower.classList.add("flower");
+    flower.innerHTML = "🌸";
+    flower.style.left = Math.random() * 100 + "vw";
+    flower.style.fontSize = Math.random() * 20 + 10 + "px";
+    document.body.appendChild(flower);
+
+    setTimeout(() => flower.remove(), 6000);
+}
+
+setInterval(createFlower, 300);
+</script>
+
+</body>
+</html>

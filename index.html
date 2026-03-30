@@ -1,203 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>For Ghina ❤️</title>
-
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial;
-}
-
-body {
-    height: 100vh;
-    overflow: hidden;
-    background: linear-gradient(270deg, #ff6b81, #ff9ff3, #feca57);
-    background-size: 600% 600%;
-    animation: gradient 10s ease infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-@keyframes gradient {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-}
-
-/* START SCREEN */
-#startScreen {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: black;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 10;
-}
-
-#startScreen h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-}
-
-#startBtn {
-    padding: 15px 30px;
-    font-size: 1.2em;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-}
-
-/* MAIN CARD */
-.card {
-    backdrop-filter: blur(20px);
-    background: rgba(255,255,255,0.1);
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 0 30px rgba(0,0,0,0.3);
-    animation: fadeIn 1.5s ease;
-}
-
-@keyframes fadeIn {
-    from {opacity: 0; transform: scale(0.9);}
-    to {opacity: 1; transform: scale(1);}
-}
-
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 15px;
-    animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-    from {text-shadow: 0 0 10px white;}
-    to {text-shadow: 0 0 30px pink;}
-}
-
-button {
-    margin: 10px;
-    padding: 12px 20px;
-    font-size: 1.1em;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-}
-
-.yes { background: white; color: #ff4d6d; }
-.no { background: #ff4d6d; color: white; }
-
-/* FLOATING HEARTS */
-.heart {
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background: pink;
-    transform: rotate(45deg);
-    animation: float 6s linear infinite;
-}
-
-.heart::before,
-.heart::after {
-    content: "";
-    width: 15px;
-    height: 15px;
-    background: pink;
-    border-radius: 50%;
-    position: absolute;
-}
-
-.heart::before { top: -7px; left: 0; }
-.heart::after { left: -7px; top: 0; }
-
-@keyframes float {
-    0% { transform: translateY(100vh) rotate(45deg); opacity: 1;}
-    100% { transform: translateY(-10vh) rotate(45deg); opacity: 0;}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Ghina ❤️</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { margin: 0; overflow: hidden; background: #0a0a0a; font-family: 'Georgia', serif; }
+        #canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .overlay { 
+            position: absolute; z-index: 10; width: 100%; height: 100%; 
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; pointer-events: none; color: white;
+            text-shadow: 0 0 20px rgba(255,20,147,0.8);
+        }
+        #play-btn {
+            pointer-events: all;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: 0.3s;
+        }
+        #play-btn:hover { background: rgba(255, 105, 180, 0.4); transform: scale(1.1); }
+    </style>
 </head>
-
 <body>
 
-<!-- START SCREEN -->
-<div id="startScreen">
-    <h1>For Ghina ❤️</h1>
-    <button id="startBtn" onclick="start()">Tap to open 💖</button>
-</div>
+    <div id="canvas-container"></div>
 
-<!-- MAIN CONTENT -->
-<div class="card" id="mainContent" style="display:none;">
-    <h1>I love you, Ghina ❤️</h1>
-    <p>You mean everything to me.</p>
-    <p>I love you so much 💖</p>
-
-    <div id="question">
-        <p>Do you love me back?</p>
-        <button class="yes" onclick="yes1()">Yes</button>
-        <button class="no" onclick="no1()">No</button>
+    <div class="overlay">
+        <h1 id="main-title" class="text-6xl md:text-8xl font-bold mb-4 opacity-0">Ghina</h1>
+        <p id="sub-title" class="text-xl md:text-2xl italic opacity-0">My heart, my soul, my everything.</p>
+        <button id="play-btn" class="mt-8 px-8 py-3 rounded-full text-lg uppercase tracking-widest">Open My Heart</button>
     </div>
-</div>
 
-<audio id="music" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2023/03/14/audio_6b1e6f88d6.mp3?filename=arabic-romantic-141997.mp3">
-</audio>
+    <audio id="love-song" loop>
+        <source src="YOUR_ARABIC_SONG_LINK_HERE.mp3" type="audio/mpeg">
+    </audio>
 
-<script>
-function start() {
-    document.getElementById("startScreen").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-    document.getElementById("music").play();
-}
+    <script>
+        // --- 3D Scene Setup ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-function yes1() {
-    document.getElementById("question").innerHTML =
-    "<p>I knew it 😌❤️</p>";
-}
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xff69b4, 2);
+        pointLight.position.set(5, 5, 5);
+        scene.add(pointLight);
 
-function no1() {
-    document.getElementById("question").innerHTML =
-    "<p>Are you sure Ghina? 🥺</p>\
-    <button class='yes' onclick='yes2()'>Yes</button>\
-    <button class='no' onclick='no2()'>No</button>";
-}
+        // --- Creating "Flowers" (Abstract 3D Hearts/Petals) ---
+        const particlesGeometry = new THREE.BufferGeometry();
+        const count = 1500;
+        const positions = new Float32Array(count * 3);
+        
+        for(let i = 0; i < count * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 15;
+        }
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.05,
+            color: 0xff1493,
+            transparent: true,
+            blending: THREE.AdditiveBlending
+        });
 
-function yes2() {
-    document.getElementById("question").innerHTML =
-    "<p>Think again 😭❤️</p>\
-    <button class='yes' onclick='finalYes()'>Yes</button>\
-    <button class='yes' onclick='finalYes()'>Obviously</button>";
-}
+        const particleMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particleMesh);
 
-function no2() {
-    document.getElementById("question").innerHTML =
-    "<p>I’ll take that as a yes 😌❤️</p>";
-}
+        camera.position.z = 5;
 
-function finalYes() {
-    document.getElementById("question").innerHTML =
-    "<h2>❤️ I LOVE YOU SO MUCH GHINA ❤️</h2>";
-}
+        // --- Animation Loop ---
+        function animate() {
+            requestAnimationFrame(animate);
+            particleMesh.rotation.y += 0.002;
+            particleMesh.rotation.x += 0.001;
+            renderer.render(scene, camera);
+        }
+        animate();
 
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(heart);
+        // --- Interaction & GSAP Animations ---
+        const playBtn = document.getElementById('play-btn');
+        const song = document.getElementById('love-song');
 
-    setTimeout(() => heart.remove(), 6000);
-}
+        playBtn.addEventListener('click', () => {
+            song.play();
+            
+            // Pro-level transition sequence
+            gsap.to(playBtn, { duration: 1, opacity: 0, y: -50, ease: "power4.in" });
+            gsap.to("#main-title", { duration: 2, opacity: 1, y: 0, delay: 0.5, ease: "back.out(1.7)" });
+            gsap.to("#sub-title", { duration: 2, opacity: 1, delay: 1.2 });
+            
+            // Zoom the camera in slowly for cinematic effect
+            gsap.to(camera.position, { duration: 10, z: 2, ease: "sine.inOut" });
+            
+            // Change particle colors dynamically
+            gsap.to(particlesMaterial.color, { duration: 5, r: 1, g: 0.4, b: 0.7, repeat: -1, yoyo: true });
+        });
 
-setInterval(createHeart, 200);
-</script>
-
+        // Handle Window Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
